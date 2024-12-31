@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ArtistsListView: View {
   @StateObject var viewModel: ArtistListViewModel
+  @StateObject var debounceObject = DebounceObject()
+  
   var body: some View {
     NavigationView {
       VStack(spacing: 10) {
@@ -35,7 +37,7 @@ struct ArtistsListView: View {
       if viewModel.firstResponseReceived {
         PaginationProgressView()
           .onAppear() {
-            viewModel.getNextPageContent()
+            invokeFetchArtistsListAPI()
           }
       }
     }
@@ -50,8 +52,13 @@ struct ArtistsListView: View {
       Text("Type name to search")
         .font(Font.system(size: 18))
       HStack {
-        TextField("enter here", text: $viewModel.searchingKeyword)
+        TextField("enter here", text: $debounceObject.text)
           .font(Font.system(size: 18))
+          .onChange(of: debounceObject.debouncedText, perform: {text in
+            // invoking search opeartion
+            viewModel.searchText = text
+            viewModel.searchArtists()
+          })
         ZStack{
           Circle()
             .frame(width: 30, height: 30)
@@ -61,8 +68,7 @@ struct ArtistsListView: View {
             .frame(width: 20, height: 20)
         }
         .onTapGesture {
-          viewModel.searchingKeyword = ""
-          hideKeyboard()
+          resetSerach()
         }
       }
       .padding()
@@ -73,6 +79,21 @@ struct ArtistsListView: View {
       )
       .padding()
     })
+  }
+  
+  private func invokeFetchArtistsListAPI() {
+    if !viewModel.searchText.isEmpty {
+      viewModel.getNextPageSearchContent()
+    } else {
+      viewModel.getNextPageContent()
+    }
+  }
+  
+  private func resetSerach() {
+    debounceObject.text = ""
+    viewModel.resetSearchResultsAndIndex()
+    invokeFetchArtistsListAPI()
+    hideKeyboard()
   }
 }
 
