@@ -13,7 +13,7 @@ class ArtistListViewModel: ObservableObject {
   @Published var isLoading: Bool = false
   @Published var firstResponseReceived: Bool = false
   @Published var searchingKeyword = ""
-  @Binding var searchText: String = ""
+  @Published var searchText: String = ""
   
   var currentIndex = 1
   var usecase: ArtistListUsecase
@@ -46,7 +46,7 @@ class ArtistListViewModel: ObservableObject {
   }
   
   func searchArtists() {
-    searchArtistsUsecase.searchArtists(query: $searchText,
+    searchArtistsUsecase.searchArtists(query: searchText,
                                        pageIndex: currentIndex) { [weak self] response in
       DispatchQueue.main.async {
         self?.firstResponseReceived = true
