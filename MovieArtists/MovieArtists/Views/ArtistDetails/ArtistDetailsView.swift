@@ -11,23 +11,30 @@ struct ArtistDetailsView: View {
   @StateObject var viewModel: ArtistDetailsViewModel
   
   var body: some View {
-    ScrollView {
-      VStack(alignment: .center,
-             spacing: 20) {
-        if let imageProfilePath = viewModel.artistDetails?.profilePath {
-          ImageView(urlString: ImageURLProvider().constructImageURL(path: imageProfilePath))
-            .frame(width: 200, height: 200)
+    NavigationView{
+      ScrollView {
+        VStack(alignment: .center,
+               spacing: 20) {
+          if let imageProfilePath = viewModel.artistDetails?.profilePath {
+            ImageView(urlString: ImageURLProvider().constructImageURL(path: imageProfilePath))
+              .frame(width: 200, height: 200)
+          }
+          nameView()
+          birthDateView()
+          birthPlaceView()
+          websiteView()
+          if !viewModel.artistMedia.isEmpty {
+            mediaView()
+          }
         }
-        nameView()
-        birthDateView()
-        birthPlaceView()
-        websiteView()
+               .padding()
+               .task {
+                 viewModel.fetchArtistDetails()
+                 viewModel.fetchArtistMedia()
+               }
       }
-             .padding()
-             .task {
-               viewModel.fetchArtistDetails()
-             }
     }
+    .navigationTitle("Artist Details")
   }
   
   func nameView() -> AnyView {
@@ -67,6 +74,30 @@ struct ArtistDetailsView: View {
         Text(viewModel.artistDetails?.homepage ?? "")
         Spacer()
       }
+    )
+  }
+  
+  func mediaView() -> AnyView {
+    AnyView(
+      VStack(alignment: .leading,
+             spacing: 16) {
+               Text("Gallery")
+                 .fontWeight(.bold)
+               let rows = [
+                GridItem(.flexible()),
+               ]
+               ScrollView(.horizontal) {
+                 LazyHGrid(rows: rows, spacing: 10) {
+                   ForEach(viewModel.artistMedia, id: \.self) { item in
+                     if let imageProfilePath = item.filePath {
+                       ImageView(urlString: ImageURLProvider().constructImageURL(path: imageProfilePath))
+                         .frame(width: 200, height: 200)
+                     }
+                   }
+                   .frame(height: 200)
+                 }
+               }
+             }
     )
   }
 }
