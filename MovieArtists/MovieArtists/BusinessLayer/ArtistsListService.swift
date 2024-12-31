@@ -26,6 +26,5 @@ class ArtistsListServiceImpl: ArtistsListService {
       }
       completion(.failure(ArtistsListError.fetchArtistsListError))
     }
-    
   }
 }
