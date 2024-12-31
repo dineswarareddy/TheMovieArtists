@@ -8,7 +8,8 @@
 import Foundation
 
 protocol ArtistsMediaRepo {
-  func fetchArtistsMedia(artistId: Int, completion: @escaping (Result<MediaModel, ArtistsMediaError>) -> Void)
+  func fetchArtistsMedia(artistId: Int,
+                         completion: @escaping (Result<MediaModel, ArtistsMediaError>) -> Void)
 }
 
 class ArtistsMediaRepoImpl: ArtistsMediaRepo {

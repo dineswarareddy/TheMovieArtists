@@ -8,7 +8,8 @@
 import Foundation
 
 protocol ArtistsListRepo {
-  func fetchArtists(page: Int, completion: @escaping (Result<ArtistResults, ArtistsListError>) -> Void)
+  func fetchArtists(page: Int,
+                    completion: @escaping (Result<ArtistResults, ArtistsListError>) -> Void)
 }
 
 class ArtistsListRepoImpl: ArtistsListRepo {
