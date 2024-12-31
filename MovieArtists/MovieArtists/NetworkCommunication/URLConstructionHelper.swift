@@ -14,12 +14,14 @@ enum OperationType {
   case searchArtists(query: String,
                      pageIndex: Int)
   case getArtistsDetails(personId: Int)
+  case getArtistMedia(personId: Int)
   
   var httpMethod: HTTPMethod {
     switch self {
     case .getPopularArtists,
         .searchArtists,
-        .getArtistsDetails:
+        .getArtistsDetails,
+        .getArtistMedia:
       return .get
     }
   }
@@ -34,6 +36,8 @@ enum OperationType {
       return "search/person?query=\(searchText)&language=en-US&page=\(pageNumber)"
     case .getArtistsDetails(let personId):
       return "person/\(personId)?language=en-US"
+    case .getArtistMedia(let personId):
+      return "person/\(personId)/images"
     }
   }
 }
