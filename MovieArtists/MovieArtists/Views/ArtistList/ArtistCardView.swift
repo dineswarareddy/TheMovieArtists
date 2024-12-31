@@ -12,12 +12,19 @@ struct ArtistCardView: View {
   
   var body: some View {
     HStack(spacing: 20) {
-      ImageView(urlString: ImageURLProvider().constructImageURL(path: artistToDisplay.profilePath))
-        .frame(width: 100, height: 100)
+      if let imagePath = artistToDisplay.profilePath {
+        ImageView(urlString: ImageURLProvider().constructImageURL(path: imagePath))
+          .frame(width: 100, height: 100)
+      } else {
+        RoundedRectangle(cornerRadius: 16)
+          .frame(width: 100, height: 100)
+          .foregroundStyle(Color(UIColor.lightGray))
+          .clipShape(RoundedRectangle(cornerRadius: 16))
+      }
       VStack(alignment: .leading) {
-        Text(artistToDisplay.originalName)
+        Text(artistToDisplay.originalName ?? "")
           .foregroundStyle(Color.white)
-        Text(artistToDisplay.knownForDepartment)
+        Text(artistToDisplay.knownForDepartment ?? "")
           .foregroundStyle(Color.white)
       }
       Spacer()

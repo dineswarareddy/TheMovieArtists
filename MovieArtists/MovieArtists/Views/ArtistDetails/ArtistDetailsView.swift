@@ -18,6 +18,11 @@ struct ArtistDetailsView: View {
           if let imageProfilePath = viewModel.artistDetails?.profilePath {
             ImageView(urlString: ImageURLProvider().constructImageURL(path: imageProfilePath))
               .frame(width: 200, height: 200)
+          } else {
+            RoundedRectangle(cornerRadius: 16)
+              .frame(width: 200, height: 200)
+              .background(Color(UIColor.lightGray))
+              .clipShape(RoundedRectangle(cornerRadius: 16))
           }
           nameView()
           birthDateView()
