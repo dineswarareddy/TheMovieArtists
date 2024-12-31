@@ -41,6 +41,7 @@ class ArtistListViewModel: ObservableObject {
     artists.removeAll()
   }
   
+  /// To fetch with out query and current index.
   func fetchArtists() {
     usecase.fetchArtists(pageIndex: currentIndex) { [weak self] response in
       DispatchQueue.main.async {
@@ -56,6 +57,8 @@ class ArtistListViewModel: ObservableObject {
     }
   }
   
+  
+  /// To search artists based in input query
   func searchArtists() {
     searchArtistsUsecase.searchArtists(query: searchText,
                                        pageIndex: currentIndex) { [weak self] response in

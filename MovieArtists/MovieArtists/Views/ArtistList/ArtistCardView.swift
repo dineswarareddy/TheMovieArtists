@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+/// This card view is to show Artist basic information under List view.
 struct ArtistCardView: View {
   var artistToDisplay: Artist
   

@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+/// The responsibility of this class is to display the List of Artists.
 struct ArtistsListView: View {
   @StateObject var viewModel: ArtistListViewModel
   @StateObject var debounceObject = DebounceObject()
@@ -81,6 +83,9 @@ struct ArtistsListView: View {
     })
   }
   
+  
+  /// If the search text is not empty viewmodel will invoke to get the query based content.
+  /// else it will invoke normal content based on current page index.
   private func invokeFetchArtistsListAPI() {
     if !viewModel.searchText.isEmpty {
       viewModel.getNextPageSearchContent()
@@ -89,6 +94,8 @@ struct ArtistsListView: View {
     }
   }
   
+  
+  /// This is to reset search text and reload normal content.
   private func resetSerach() {
     debounceObject.text = ""
     viewModel.resetSearchResultsAndIndex()
