@@ -15,7 +15,7 @@ class Artist: Codable {
   internal init(name: String,
                 id: Int,
                 originalName: String,
-                profilePath: String,
+                profilePath: String?,
                 knownForDepartment: String) {
     self.name = name
     self.id = id
@@ -26,7 +26,7 @@ class Artist: Codable {
   
   let name: String
   let id: Int
-  let originalName: String
-  let profilePath: String
-  let knownForDepartment: String
+  let originalName: String?
+  let profilePath: String?
+  let knownForDepartment: String?
 }
