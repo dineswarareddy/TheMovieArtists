@@ -16,6 +16,6 @@ struct ImageView: View {
 
 struct ImageView_Previews: PreviewProvider {
     static var previews: some View {
-        ImageView(urlString: "https://developer.apple.com/news/images/og/swiftui-og.png")
+        ImageView(urlString: "sample.png")
     }
 }
